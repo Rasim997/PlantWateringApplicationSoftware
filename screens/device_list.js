@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import {StyleSheet, Text, View,TouchableOpacity, ActivityIndicator,ScrollView,FlatList ,Dimensions} from 'react-native';
+import {Text, View,TouchableOpacity,Image,Button,FlatList} from 'react-native';
 import { globalStyles } from '../styles/globalStyles';
 
-export default class Device_Settings extends Component {
+
+
+
+export default class Device_List extends Component {
   
   constructor(props) {
     super(props);
@@ -12,13 +15,41 @@ export default class Device_Settings extends Component {
       isLoading: true,
     };
   }
- 
     render(){
       return (
-      <View style={globalStyles.container}>
-      <Text style={globalStyles.title}>Hello</Text>
-      </View>
-        );
+        <View style={globalStyles.container}>
+          <View style={globalStyles.header}>
+            <TouchableOpacity style={globalStyles.navButton} onPress={() => {this.props.navigation.goBack();}}>
+              <Image style={globalStyles.navButtonText} source={require('../assets/Back.png')}/>
+            </TouchableOpacity>
+
+            <Text style={globalStyles.title}>𝓟𝓦𝓢</Text>
+
+            <TouchableOpacity style={globalStyles.navButton} onPress={() => {this.props.navigation.navigate('Device_Settings');}}>
+              <Image style={globalStyles.navButtonText} source={require('../assets/Settings.png')}/>
+            </TouchableOpacity>
+          </View>
+          <View style={globalStyles.body}>
+            <Text style={globalStyles.bodyTitle}>📱 Devices</Text>
+            <View style={globalStyles.line}/>
+            
+            <FlatList style={{flex:9, marginTop:20}}>
+
+            </FlatList>
+
+            <Button title={"gellp"}onPress={()=> this.props.navigation.navigate("Device_Home")}/>
+            
+            <TouchableOpacity style={globalStyles.bodyButton}>
+              <Text style={globalStyles.bodyButtonText}>➕ Add a Device</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={globalStyles.bodyButton}>
+              <Text style={globalStyles.bodyButtonText}>⚙ Settings</Text>
+            </TouchableOpacity>
+
+          </View>
+        </View>
+      );
     }
     
 

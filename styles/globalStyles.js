@@ -36,7 +36,8 @@ export const globalStyles = StyleSheet.create({
         margin:10,
         borderRadius:15,
         borderWidth:1,
-        backgroundColor:'rgba(255, 255, 255, 0.5)'
+        backgroundColor:'rgba(255, 255, 255, 0.5)',
+        padding:5,
 
       },
       navButtonText:{
@@ -47,12 +48,15 @@ export const globalStyles = StyleSheet.create({
       },
 
       title: {
-        fontSize:40,
+        fontSize:30,
         alignSelf:'center',
         borderRadius:15,
         paddingHorizontal:10,
         paddingVertical:2,
-        backgroundColor:'rgba(255, 255, 255, 0.2)'
+        backgroundColor:'rgba(255, 255, 255, 0.2)',
+        textAlign:'center',
+        height:'70%',
+        justifyContent:'center',
       },
       bodyTitle:{
         color:'white',
@@ -79,7 +83,7 @@ export const globalStyles = StyleSheet.create({
         width:screenWidth-20,
         marginVertical:5,
         justifyContent:'center',
-        
+        maxHeight:60,
       },
       scrollScreen:{
         backgroundColor:'tomato',
@@ -90,6 +94,13 @@ export const globalStyles = StyleSheet.create({
         alignItems:'center',
         marginHorizontal:10,
         borderRadius:15,
+      },
+      bodyContainer:{
+        flex:1,
+        width:screenWidth-10,
+        borderWidth:1,
+        justifyContent:'center',
+        paddingVertical:5,
       },
       
 })

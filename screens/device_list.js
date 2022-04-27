@@ -15,32 +15,38 @@ export default class Device_List extends Component {
       isLoading: true,
     };
   }
-    render(){
-      return (
-        <View style={globalStyles.container}>
-          <View style={globalStyles.header}>
-            <TouchableOpacity style={globalStyles.navButton} onPress={() => {this.props.navigation.goBack();}}>
-              <Image style={globalStyles.navButtonText} source={require('../assets/Back.png')}/>
-            </TouchableOpacity>
 
-            <Text style={globalStyles.title}>𝓟𝓦𝓢</Text>
+  viewDevice(DeviceInfo){
 
-            <TouchableOpacity style={globalStyles.navButton} onPress={() => {this.props.navigation.navigate('Device_Settings');}}>
-              <Image style={globalStyles.navButtonText} source={require('../assets/Settings.png')}/>
-            </TouchableOpacity>
-          </View>
-          <View style={globalStyles.body}>
-            <Text style={globalStyles.bodyTitle}>📱 Devices</Text>
-            <View style={globalStyles.line}/>
-            
+  }
+
+  render(){
+    return (
+        
+      <View style={globalStyles.container}>
+          
+        <View style={globalStyles.header}>
+          <TouchableOpacity style={globalStyles.navButton} onPress={() => {this.props.navigation.goBack();}}>
+          <Image style={globalStyles.navButtonText} source={require('../assets/Back.png')}/>
+        </TouchableOpacity>
+
+        <Text style={globalStyles.title}>PLANT CARE</Text>
+
+        <TouchableOpacity style={globalStyles.navButton} onPress={() => {this.props.navigation.navigate('Device_Settings');}}>
+          <Image style={globalStyles.navButtonText} source={require('../assets/Settings.png')}/>
+        </TouchableOpacity>
+        </View>
+        <View style={globalStyles.body}>
+          <Text style={globalStyles.bodyTitle}>📱 Devices</Text>
+          <View style={globalStyles.line}/>
             <FlatList style={{flex:9, marginTop:20}}>
 
             </FlatList>
 
             <Button title={"gellp"}onPress={()=> this.props.navigation.navigate("Device_Home")}/>
-            
-            <TouchableOpacity style={globalStyles.bodyButton}>
-              <Text style={globalStyles.bodyButtonText}>➕ Add a Device</Text>
+
+            <TouchableOpacity style={globalStyles.bodyButton} onPress={()=>this.props.navigation.navigate("Device_Add")}>
+              <Text style={globalStyles.bodyButtonText} onPress={()=>this.props.navigation.navigate("Device_Add")}>➕ Add a Device</Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={globalStyles.bodyButton}>
@@ -51,7 +57,4 @@ export default class Device_List extends Component {
         </View>
       );
     }
-    
-
-  
 }

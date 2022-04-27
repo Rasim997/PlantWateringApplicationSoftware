@@ -29,7 +29,7 @@ export default class Device_Home extends Component {
               <Image style={globalStyles.navButtonText} source={require('../assets/Back.png')}/>
             </TouchableOpacity>
 
-            <Text style={globalStyles.title}>𝓟𝓦𝓢</Text>
+            <Text style={globalStyles.title}>Plant Care</Text>
 
             <TouchableOpacity style={globalStyles.navButton} onPress={() => {this.props.navigation.navigate('Device_Settings');}}>
               <Image style={globalStyles.navButtonText} source={require('../assets/Settings.png')}/>
@@ -43,7 +43,6 @@ export default class Device_Home extends Component {
               pagingEnabled={true}
               
               onMomentumScrollEnd={()=>{console.log("scrollsthick")}}
-              onMomentumScrollBegin={()=>{console.log("scrollsthick")}}
             >
                 <View style={globalStyles.scrollScreen}>
                   <Text Style={{fontSize:50,padding:15,color:'white',textAlign:'center'}}> 

@@ -58,7 +58,7 @@ export default class Device_Connecting extends Component {
       };
   
       return fetch(
-        'http://192.168.4.1:80/connect',
+        `http://192.168.4.1:80/connect`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -81,13 +81,20 @@ export default class Device_Connecting extends Component {
           const currDevices = JSON.parse(await AsyncStorage.getItem('@devices'));
           if(currDevices != null){
             const toStore={
-              deviceId:JSON.stringify(responseJson.hostname)
+              deviceId:responseJson.hostname,
+              deviceIp:responseJson.ip,
+              deviceSsid:responseJson.ssid,
+              devicePassword:responseJson.password
+
             };
             currDevices.push(toStore);
             await AsyncStorage.setItem('@devices',JSON.stringify(currDevices));
           }else{
             const device=[{
-              deviceId:JSON.stringify(responseJson.hostname)
+              deviceId:responseJson.hostname,
+              deviceIp:responseJson.ip,
+              deviceSsid:responseJson.ssid,
+              devicePassword:responseJson.password
             }]
             await AsyncStorage.setItem('@devices',JSON.stringify(device));
           }
@@ -96,7 +103,7 @@ export default class Device_Connecting extends Component {
           this.props.navigation.navigate('Device_List');
         })
         .catch((error) => {
-          Error(error);
+          Alert.alert(error.message);
         });
    };
 

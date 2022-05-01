@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import {Text, View,TouchableOpacity,Image} from 'react-native';
+import {Text, View,TouchableOpacity,Image,Button} from 'react-native';
 import { globalStyles } from '../styles/globalStyles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default class Device_Settings extends Component {
   
@@ -11,6 +13,9 @@ export default class Device_Settings extends Component {
       friend_list: [],
       isLoading: true,
     };
+  }
+  reset = async()=>{
+    await AsyncStorage.clear();
   }
  
     render(){
@@ -29,6 +34,7 @@ export default class Device_Settings extends Component {
         </View>
         <View style={globalStyles.body}>
           <Text >Settings Page</Text>
+          <Button title={"asdasd"} onPress={()=>this.reset()}/>
         </View>
       </View>
         );

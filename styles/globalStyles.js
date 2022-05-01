@@ -69,6 +69,7 @@ export const globalStyles = StyleSheet.create({
         borderWidth:2,
         alignSelf:'center',
         width:screenWidth-40,
+        marginVertical:5,
       },
       bodyButtonText:{
         fontSize:30,

@@ -13,7 +13,12 @@ export default class Device_List extends Component {
     super(props);
     this.state = {
       isLoading: true,
-      devices:null,
+      devices:[],
+      devicesData:[{
+        deviceTemprature:0,
+        deviceHumidity:0,
+        deviceMoisture:0,
+      }],
       deviceTemprature:null,
       deviceHumidity:null,
       deviceMoisture:null,
@@ -23,13 +28,29 @@ export default class Device_List extends Component {
   componentDidMount(){
     this.refresh=this.props.navigation.addListener('focus',()=>{
       this.getData();
+
+      console.log('focus');
+
+      this.interval= setInterval(() => {
+        this.getdevicesData();
+      }, 5000);
+
     });
+
+    this.props.navigation.addListener('blur', () => {
+      console.log('blur');
+      clearInterval(this.interval);
+    });
+
     this.getData();
+
+    
     
   }
   componentWillUnmount(){
     this.refresh();
   }
+
 
   getData = async()=>{
     const data = JSON.parse(await AsyncStorage.getItem('@devices'));
@@ -37,7 +58,6 @@ export default class Device_List extends Component {
   }
 
    getDeviceSensors =async(Deviceip)=>{
-    let datasend
     axios.get(`http://${Deviceip}:80/sensors`)
     .then((response) => {
       if (response.status == 200) {
@@ -47,7 +67,6 @@ export default class Device_List extends Component {
       }
     })
     .then((responseJson) => {
-      
       this.setState({
         deviceTemprature:responseJson.Temprature,
         deviceHumidity:responseJson.Humidity,
@@ -55,24 +74,37 @@ export default class Device_List extends Component {
       })
     })
     .catch((error) => {
-      Alert.alert(error.message);
       console.log(error)
     });
 
   };
-  
-  displayDevices(deviceInfo){
 
-    setTimeout(() => {
-      this.getDeviceSensors(deviceInfo.deviceIp)
-      console.log("SHEEEESH")
-    }, 10000);
-    let humidity=Math.round(parseFloat(this.state.deviceHumidity))
+  getdevicesData(){
+    const devices=this.state.devices;
+    let deviceData = [];
+    if(devices!=null){
+      for(let i=0;i<devices.length;i++){
+        this.getDeviceSensors(devices[i].deviceIp);
+        const toAdd={
+          deviceTemprature:this.state.deviceTemprature,
+          deviceHumidity:this.state.deviceHumidity,
+          deviceMoisture:this.state.deviceMoisture,
+        }
+        deviceData.push(toAdd);
+      }
+      this.setState({devicesData:deviceData});
+    }
+    
+  }
+  
+  displayDevices(deviceInfo,index){
+    let humidity=Math.round(parseFloat(this.state.devicesData[index].deviceHumidity))
+    
     
     
     return(
       //main box=>2 boxes inside=> 1. empty 2. 3 more boxes
-      <TouchableOpacity style={styles.DeviceOpacity} onPress={()=> this.props.navigation.navigate("Device_Home")}>
+      <TouchableOpacity style={styles.DeviceOpacity} onPress={async()=>{this.props.navigation.navigate("Device_Home");await AsyncStorage.setItem('@currentDevice',JSON.stringify(deviceInfo)) } }>
 
 
         <View style={styles.DeviceImageView}>
@@ -83,17 +115,17 @@ export default class Device_List extends Component {
           <View style={styles.InfoSectionView}>
             <View style={styles.InfoView}>
               <Image style={styles.InfoImage} source={require('../assets/Temperature.png')}/>
-              <Text style={styles.InfoText}>{this.state.deviceTemprature}</Text>
+              <Text style={styles.InfoText}>{this.state.devicesData[index].deviceTemprature}°C</Text>
             </View>
 
             <View style={styles.InfoView}>
               <Image style={styles.InfoImage} source={require('../assets/Humidity.png')}/>
-              <Text style={styles.InfoText}>{humidity}</Text>
+              <Text style={styles.InfoText}>{humidity}%</Text>
             </View>
 
             <View style={styles.InfoView}>
               <Image style={styles.InfoImage} source={require('../assets/Moisture.png')}/>
-              <Text style={styles.InfoText}>{this.state.deviceMoisture}</Text>
+              <Text style={styles.InfoText}>{this.state.devicesData[index].deviceMoisture}%</Text>
             </View>
           </View>
         </View>
@@ -122,7 +154,7 @@ export default class Device_List extends Component {
           <View style={globalStyles.line}/>
             <FlatList
               data={this.state.devices}
-              renderItem={({item})=>(this.displayDevices(item))}
+              renderItem={({item,index})=>(this.displayDevices(item,index))}
               keyExtractor={(item)=>(item.deviceId.toString())}
             />
             

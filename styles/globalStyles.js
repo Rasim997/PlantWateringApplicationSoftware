@@ -87,7 +87,6 @@ export const globalStyles = StyleSheet.create({
         maxHeight:60,
       },
       scrollScreen:{
-        backgroundColor:'tomato',
         flex: 1,
         marginVertical:20,
         width:screenWidth-30,
@@ -95,6 +94,7 @@ export const globalStyles = StyleSheet.create({
         alignItems:'center',
         marginHorizontal:10,
         borderRadius:15,
+        backgroundColor:'rgba(255,255,255,0.3)'
       },
       bodyContainer:{
         flex:1,

@@ -17,6 +17,28 @@ export default class Device_Settings extends Component {
   reset = async()=>{
     await AsyncStorage.clear();
   }
+  addDevice = async()=>{
+    const currDevices = JSON.parse(await AsyncStorage.getItem('@devices'));
+          if(currDevices != null){
+            const toStore={
+              deviceId:'fa7eb994',
+              deviceIp:'192.168.0.78',
+              deviceSsid:'VM2884618',
+              devicePassword:'yvscrdDN78sk'
+
+            }
+            currDevices.push(toStore);
+            await AsyncStorage.setItem('@devices',JSON.stringify(currDevices));
+          }else{
+            const device=[{
+              deviceId:'fa7eb994',
+              deviceIp:'192.168.0.78',
+              deviceSsid:'VM2884618',
+              devicePassword:'yvscrdDN78sk'
+            }]
+            await AsyncStorage.setItem('@devices',JSON.stringify(device));
+          }
+  };
  
     render(){
       return (
@@ -33,8 +55,12 @@ export default class Device_Settings extends Component {
           </TouchableOpacity>
         </View>
         <View style={globalStyles.body}>
-          <Text >Settings Page</Text>
-          <Button title={"asdasd"} onPress={()=>this.reset()}/>
+          <Text style={globalStyles.bodyTitle} >Settings</Text>
+          <View style={globalStyles.line}/>
+          <TouchableOpacity style={globalStyles.bodyButton} onPress={()=>this.reset()}>
+            <Text style={globalStyles.bodyButtonText}>Reset Application</Text>
+          </TouchableOpacity>
+          <Button title={"Add"} onPress={()=>this.addDevice()}/>
         </View>
       </View>
         );

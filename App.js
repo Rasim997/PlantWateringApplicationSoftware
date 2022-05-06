@@ -17,6 +17,7 @@ export default function App() {
       <Stack.Navigator
         initialRouteName="Device_List"
         screenOptions={{ headerShown: false }}
+        
       >
         <Stack.Screen name="Device_Home" component={Device_Home} />
         <Stack.Screen name="Device_Settings" component={Device_Settings} />

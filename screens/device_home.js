@@ -124,7 +124,7 @@ export default class Device_Home extends Component {
   };
 
   setTimeInterval(newTime) {
-    let curr = this.state.wateringOptions;
+    let curr = this.state.wateringOptionsToStore;
     const toSet = {
       activateSystem: curr.activateSystem,
       timeInterval: newTime,
@@ -135,7 +135,7 @@ export default class Device_Home extends Component {
   }
 
   setMoisture(Level) {
-    let curr = this.state.wateringOptions;
+    let curr = this.state.wateringOptionsToStore;
     const toSet = {
       activateSystem: curr.activateSystem,
       timeInterval: curr.timeInterval,
@@ -263,7 +263,7 @@ export default class Device_Home extends Component {
       });
     }
     //console.log(this.state.wateringOptions)
-    this.setState({ wateringOptionsToStore: this.state.wateringOptions });
+    this.setState({ wateringOptionsToStore: this.state.wateringOptions, deepSleepTimeToStore:this.state.deepSleepTime});
     //console.log(this.state.wateringOptionsToStore)
     console.log("getStoredSettings");
   };

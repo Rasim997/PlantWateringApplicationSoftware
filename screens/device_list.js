@@ -1,3 +1,4 @@
+//importing the required Libraries
 import React, { Component } from 'react';
 import {Text, View,TouchableOpacity,Image,Button,FlatList,ScrollView,StyleSheet,Alert} from 'react-native';
 import { globalStyles } from '../styles/globalStyles';
@@ -8,7 +9,7 @@ const axios = require('axios')
 
 
 export default class Device_List extends Component {
-  
+//defining global variables
   constructor(props) {
     super(props);
     this.state = {
@@ -24,19 +25,19 @@ export default class Device_List extends Component {
       deviceMoisture:null,
     };
   }
-
+  //functiion that runs on page load
   componentDidMount(){
+    //when the page is navigated to from another location load data
     this.refresh=this.props.navigation.addListener('focus',()=>{
       this.getData();
 
-      console.log('focus');
-
+      //start a 5 second time to get data for all devices
       this.interval= setInterval(() => {
         this.getdevicesData();
       }, 5000);
 
     });
-
+    //when the page is unfocused delete stop the 5 second timer
     this.props.navigation.addListener('blur', () => {
       console.log('blur');
       clearInterval(this.interval);
@@ -51,12 +52,13 @@ export default class Device_List extends Component {
     this.refresh();
   }
 
-
+  //get the stored devices from the permanant storage
   getData = async()=>{
     const data = JSON.parse(await AsyncStorage.getItem('@devices'));
     this.setState({devices:data});
   }
 
+  //get the sensor infomation for the device
    getDeviceSensors =async(Deviceip)=>{
     axios.get(`http://${Deviceip}:80/sensors`)
     .then((response) => {
@@ -78,7 +80,8 @@ export default class Device_List extends Component {
     });
 
   };
-
+  //loop through all the stored devices and get the sensor infomation for each of them
+  //then store the data into an array
   getdevicesData(){
     const devices=this.state.devices;
     let deviceData = [];
@@ -96,8 +99,9 @@ export default class Device_List extends Component {
     }
     
   }
-  
+  //device panel with all the device sensor infomation
   displayDevices(deviceInfo,index){
+    //round the humidity as its recieved in a long float
     let humidity=Math.round(parseFloat(this.state.devicesData[index].deviceHumidity))
     
     
@@ -132,7 +136,7 @@ export default class Device_List extends Component {
       </TouchableOpacity>
     );
   }
-
+  //main screen view with header and body
   render(){
     return (
         
@@ -171,6 +175,7 @@ export default class Device_List extends Component {
       );
     }
 }
+//styles specific for this page
 const styles = StyleSheet.create({
   DeviceOpacity:{
     flex:1,

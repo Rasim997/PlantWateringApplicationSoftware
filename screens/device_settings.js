@@ -14,9 +14,11 @@ export default class Device_Settings extends Component {
       isLoading: true,
     };
   }
+  //reset the whole application
   reset = async()=>{
     await AsyncStorage.clear();
   }
+  //backdoor to add a test device
   addDevice = async()=>{
     const currDevices = JSON.parse(await AsyncStorage.getItem('@devices'));
           if(currDevices != null){
@@ -39,7 +41,7 @@ export default class Device_Settings extends Component {
             await AsyncStorage.setItem('@devices',JSON.stringify(device));
           }
   };
- 
+    //main render function for the page 
     render(){
       return (
         <View style={globalStyles.container}>
@@ -48,7 +50,7 @@ export default class Device_Settings extends Component {
             <Image style={globalStyles.navButtonText} source={require('../assets/Back.png')}/>
           </TouchableOpacity>
 
-          <Text style={globalStyles.title}>𝓟𝓦𝓢</Text>
+          <Text style={globalStyles.title}>PLANT CARE</Text>
 
           <TouchableOpacity style={globalStyles.navButton} onPress={() => {this.props.navigation.navigate('Device_Settings');}}>
             <Image style={globalStyles.navButtonText} source={require('../assets/Settings.png')}/>
@@ -60,7 +62,6 @@ export default class Device_Settings extends Component {
           <TouchableOpacity style={globalStyles.bodyButton} onPress={()=>this.reset()}>
             <Text style={globalStyles.bodyButtonText}>Reset Application</Text>
           </TouchableOpacity>
-          <Button title={"Add"} onPress={()=>this.addDevice()}/>
         </View>
       </View>
         );
